@@ -9,5 +9,6 @@ app_name = "BojanglesSecurity"
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
+    path("device/<int:pk>/", views.DeviceSettingsView.as_view(), name="device"),
     path('update-privacy-setting/', views.update_privacy_setting, name='update_privacy_setting'),
 ]

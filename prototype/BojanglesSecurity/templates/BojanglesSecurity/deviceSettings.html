@@ -1,0 +1,199 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container for the page */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Card for each setting */
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Slider styles */
+        .slider {
+            width: 50px;
+            height: 25px;
+            appearance: none;
+            border-radius: 12px;
+            background: #ddd;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .slider:checked {
+            background: #4CAF50;
+        }
+
+        .slider:focus {
+            outline: none;
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            height: 18px;
+            width: 18px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        .slider:checked:before {
+            transform: translateX(24px);
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Privacy Settings for {{ device.deviceName }}</h1>
+
+        <form method="post" id="privacy-settings-form">
+            {% csrf_token %}
+            <div class="card">
+                <label for="EnableDataCollection">Enable Data Collection</label>
+                <input type="checkbox" class="slider" id="EnableDataCollection" name="EnableDataCollection" {% if privacy_settings.EnableDataCollection %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="ActivityTracking">Activity Tracking</label>
+                <input type="checkbox" class="slider" id="ActivityTracking" name="ActivityTracking" {% if privacy_settings.ActivityTracking %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="VoiceDataCollection">Voice Data Collection</label>
+                <input type="checkbox" class="slider" id="VoiceDataCollection" name="VoiceDataCollection" {% if privacy_settings.VoiceDataCollection %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="LocationTracking">Location Tracking</label>
+                <input type="checkbox" class="slider" id="LocationTracking" name="LocationTracking" {% if privacy_settings.LocationTracking %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="ShareDataWithThirdParties">Share Data With Third Parties</label>
+                <input type="checkbox" class="slider" id="ShareDataWithThirdParties" name="ShareDataWithThirdParties" {% if privacy_settings.ShareDataWithThirdParties %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="AllowUsageTracking">Allow Usage Tracking</label>
+                <input type="checkbox" class="slider" id="AllowUsageTracking" name="AllowUsageTracking" {% if privacy_settings.AllowUsageTracking %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="StorePersonalUsageData">Store Personal Usage Data</label>
+                <input type="checkbox" class="slider" id="StorePersonalUsageData" name="StorePersonalUsageData" {% if privacy_settings.StorePersonalUsageData %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="StorePurchaseHistory">Store Purchase History</label>
+                <input type="checkbox" class="slider" id="StorePurchaseHistory" name="StorePurchaseHistory" {% if privacy_settings.StorePurchaseHistory %}checked{% endif %}>
+            </div>
+
+            <div class="card">
+                <label for="AllowDataCollectionForCrossDevice">Allow Data Collection For Cross Device</label>
+                <input type="checkbox" class="slider" id="AllowDataCollectionForCrossDevice" name="AllowDataCollectionForCrossDevice" {% if privacy_settings.AllowDataCollectionForCrossDevice %}checked{% endif %}>
+            </div>
+
+            <button type="submit">Save Settings</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('privacy-settings-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+        
+            // Collect the values from the checkboxes
+            const settings = {
+                id: {{ device.id }},  // Pass the device's id to the request
+                EnableDataCollection: document.getElementById('EnableDataCollection').checked,
+                ActivityTracking: document.getElementById('ActivityTracking').checked,
+                VoiceDataCollection: document.getElementById('VoiceDataCollection').checked,
+                LocationTracking: document.getElementById('LocationTracking').checked,
+                ShareDataWithThirdParties: document.getElementById('ShareDataWithThirdParties').checked,
+                AllowUsageTracking: document.getElementById('AllowUsageTracking').checked,
+                StorePersonalUsageData: document.getElementById('StorePersonalUsageData').checked,
+                StorePurchaseHistory: document.getElementById('StorePurchaseHistory').checked,
+                AllowDataCollectionForCrossDevice: document.getElementById('AllowDataCollectionForCrossDevice').checked
+            };
+        
+            // Send the data to the server as JSON
+            fetch("{% url 'BojanglesSecurity:update_privacy_setting' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(settings) // Send the settings as JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert("Failed to update setting: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+</html>

@@ -1,166 +1,98 @@
+<!DOCTYPE html>
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Settings</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Devices</title>
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
 
-        .card {
-            background-color: white;
+        /* Container for the whole page */
+        .container {
             padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .slider {
-            width: 50px;
-            height: 25px;
-            appearance: none;
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        h5 {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        /* Style for each device list item */
+        .device-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .device-list li {
+            margin-bottom: 15px;
+        }
+
+        /* Style the links to look like buttons */
+        .device-link {
+            display: block;
+            padding: 15px;
+            background-color: #f0f0f0;
             border-radius: 12px;
-            background: #ddd;
-            transition: background 0.3s;
-            position: relative;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .slider:checked {
-            background: #4CAF50;
+        .device-link:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
         }
 
-        .slider:focus {
-            outline: none;
+        .device-link:active {
+            background-color: #ccc;
         }
 
-        .slider:before {
-            content: "";
-            position: absolute;
-            top: 3px;   /* Adjusted from 2px */
-            left: 3px;  /* Adjusted from 2px */
-            height: 18px;  /* Adjusted size */
-            width: 18px;   /* Adjusted size */
-            background-color: white;
-            border-radius: 50%;
-            transition: 0.4s;
+        /* Add a thin border around the list */
+        .device-list {
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
         }
 
-        .slider:checked:before {
-            transform: translateX(24px);
-        }
     </style>
 </head>
+
 <body>
 
-    <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold text-center mb-6">Privacy Settings</h1>
-
-        <div class="card">
-            <label for="EnableDataCollection" class="block font-medium text-lg mb-2">Enable Data Collection</label>
-            <input type="checkbox" class="slider" id="EnableDataCollection" data-id="1" data-field="EnableDataCollection" {% if EnableDataCollection %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="ActivityTracking" class="block font-medium text-lg mb-2">Activity Tracking</label>
-            <input type="checkbox" class="slider" id="ActivityTracking" data-id="1" data-field="ActivityTracking" {% if ActivityTracking %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="VoiceDataCollection" class="block font-medium text-lg mb-2">Voice Data Collection</label>
-            <input type="checkbox" class="slider" id="VoiceDataCollection" data-id="1" data-field="VoiceDataCollection" {% if VoiceDataCollection %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="LocationTracking" class="block font-medium text-lg mb-2">Location Tracking</label>
-            <input type="checkbox" class="slider" id="LocationTracking" data-id="1" data-field="LocationTracking" {% if LocationTracking %}checked{% endif %}>
-        </div>
-        
-        <div class="card">
-            <label for="ShareDataWithThirdParties" class="block font-medium text-lg mb-2">Share Data With Third Parties</label>
-            <input type="checkbox" class="slider" id="ShareDataWithThirdParties" data-id="1" data-field="ShareDataWithThirdParties" {% if ShareDataWithThirdParties %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="AllowUsageTracking" class="block font-medium text-lg mb-2">Allow Usage Tracking</label>
-            <input type="checkbox" class="slider" id="AllowUsageTracking" data-id="1" data-field="AllowUsageTracking" {% if AllowUsageTracking %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="DataEncryption" class="block font-medium text-lg mb-2">Data Encryption</label>
-            <input type="checkbox" class="slider" id="DataEncryption" data-id="1" data-field="DataEncryption" {% if DataEncryption %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="StorePersonalUsageData" class="block font-medium text-lg mb-2">Store Personal Usage Data</label>
-            <input type="checkbox" class="slider" id="StorePersonalUsageData" data-id="1" data-field="StorePersonalUsageData" {% if StorePersonalUsageData %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="StorePurchaseHistory" class="block font-medium text-lg mb-2">Store Purchase History</label>
-            <input type="checkbox" class="slider" id="StorePurchaseHistory" data-id="1" data-field="StorePurchaseHistory" {% if StorePurchaseHistory %}checked{% endif %}>
-        </div>
-
-        <div class="card">
-            <label for="AllowDataCollectionForCrossDevice" class="block font-medium text-lg mb-2">Allow Data Collection For Cross Device</label>
-            <input type="checkbox" class="slider" id="AllowDataCollectionForCrossDevice" data-id="1" data-field="AllowDataCollectionForCrossDevice" {% if AllowDataCollectionForCrossDevice %}checked{% endif %}>
-        </div>
-        
-
+    <div class="container">
+        <h1>Devices</h1>
+        <h5>Devices:</h5>
+        <ul class="device-list">
+            {% for device in device_list %}
+                <li>
+                    <a href="{% url 'BojanglesSecurity:device' device.pk %}" class="device-link">{{ device.deviceName }}</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-
-    <script>
-        document.querySelectorAll(".slider").forEach(slider => {
-            slider.addEventListener("change", function () {
-                const settingId = this.getAttribute("data-id");
-                const field = this.getAttribute("data-field");
-                const value = this.checked;
-
-                fetch("{% url 'BojanglesSecurity:update_privacy_setting' %}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": getCookie("csrftoken")
-                    },
-                    body: JSON.stringify({
-                        id: settingId,
-                        field: field,
-                        value: value
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message);
-                    } else {
-                        alert("Failed to update setting: " + data.message);
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-            });
-        });
-
-        // Helper function to get CSRF token
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== "") {
-                const cookies = document.cookie.split(";");
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.startsWith(name + "=")) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-    </script>
 
 </body>
 </html>
