@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("MajorHelp.urls", namespace="MajorHelp")),  # This removes the "MajorHelp" prefix from all URLs in MajorHelp
+    path('', include("BojanglesSecurity.urls", namespace="BojanglesSecurity")),
 ]

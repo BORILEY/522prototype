@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'BojanglesSecurity.apps.BojanglesSecurityConfig',
+    'BojanglesSecurity.apps.BojanglessecurityConfig',
 ]
 
 MIDDLEWARE = [
