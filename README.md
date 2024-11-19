@@ -1,2 +1,4 @@
 # 522prototype
-prototype for 522 group project
+Prototype for Smart Home Device Privacy Management Application
+
+Link For YouTube Demo
