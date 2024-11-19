@@ -1,5 +1,3 @@
-
-
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
@@ -11,4 +9,5 @@ app_name = "BojanglesSecurity"
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
+    path('update-privacy-setting/', views.update_privacy_setting, name='update_privacy_setting'),
 ]
