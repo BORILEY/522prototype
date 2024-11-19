@@ -10,5 +10,5 @@ from MajorHelp.views import * # about,contact, SearchView, SchoolResultsView, De
 app_name = "MajorHelp"
 
 urlpatterns = [
-    path()
+    path("", views.HomeView.as_view(), name="home"),
 ]
