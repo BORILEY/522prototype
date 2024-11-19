@@ -9,7 +9,7 @@ from .models import PrivacySettings
 # Create your views here.
 
 class HomeView(TemplateView):
-    template_name = "BojanglesSecurity/home.html"  # Replace with your actual template path
+    template_name = "BojanglesSecurity/home.html"
     
 
 @csrf_exempt
@@ -21,7 +21,7 @@ def update_privacy_setting(request):
             field = data.get("field")
             value = data.get("value")
 
-            # Validate and update the setting
+            # Find the setting by ID and update the field
             privacy_setting = get_object_or_404(PrivacySettings, id=setting_id)
             if hasattr(privacy_setting, field):
                 setattr(privacy_setting, field, value)
